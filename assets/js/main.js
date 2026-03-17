@@ -149,18 +149,25 @@ document.addEventListener("DOMContentLoaded", function () {
   const revealItems = document.querySelectorAll(".reveal");
 
   function revealOnScroll() {
-    const triggerBottom = window.innerHeight * 0.88;
+    const windowHeight = window.innerHeight;
+    const triggerPoint = windowHeight * 0.82;
 
     revealItems.forEach((item) => {
       const rect = item.getBoundingClientRect();
+      const itemTop = rect.top;
+      const itemBottom = rect.bottom;
 
-      if (rect.top < triggerBottom) {
+      if (itemTop < triggerPoint && itemBottom > 80) {
         item.classList.add("is-visible");
+      } else {
+        item.classList.remove("is-visible");
       }
     });
   }
 
-  revealOnScroll();
   window.addEventListener("scroll", revealOnScroll);
   window.addEventListener("resize", revealOnScroll);
+  window.addEventListener("load", revealOnScroll);
+
+  setTimeout(revealOnScroll, 100);
 });
